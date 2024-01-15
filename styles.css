@@ -1,0 +1,219 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #3498db; /* Initial background color */
+  color: #fff; /* Text color */
+  transition: background-color 1s ease; /* Background color transition */
+
+  height: 100vh;
+}
+
+header {
+  background-color: #2c3e50; /* Header background color */
+  padding: 10px;
+  font-family: "Georgia", serif;
+  text-align: center;
+}
+
+footer {
+  background-color: #2c3e50; /* Footer background color */
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.question-container {
+  margin-bottom: 20px;
+}
+
+.question {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.option {
+  margin-bottom: 10px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid #fff; /* Button border */
+  border-radius: 5px;
+}
+
+.btn-start {
+  background-color: #2ecc71; /* Start button color */
+  color: #fff;
+  font-size: 24px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3% 7%;
+}
+
+.btn-next {
+  font-size: 16px;
+}
+
+.timer-bar {
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background-color: #1abc9c; /* Timer progress color */
+  border-radius: 5px;
+  animation: timerAnimation 10s linear;
+}
+
+.result-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.result-popup-content {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.result-popup-correct .btn-next {
+  background-color: #2ecc71; /* Correct answer button color */
+  color: #fff;
+}
+
+.result-popup-wrong .btn-next {
+  background-color: #e74c3c; /* Wrong answer button color */
+  color: #fff;
+}
+
+.finish-container {
+  text-align: center;
+  display: none; /* Initially hide finish container */
+}
+
+.finish-message {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.option input[type="radio"] {
+  transform: scale(1.5); /* Adjust the scale factor as needed */
+  margin-right: 5px; /* Add spacing between radio button and label */
+}
+
+.quiz-container {
+  max-width: 100%; /* Adjust the width as needed */
+  max-height: 80vh; /* Adjust the height as needed */
+  background-color: #2c3e50;
+  padding: 3% 8%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  display: none;
+  left: 10%; /* Adjust the left margin as needed */
+  animation: fadeIn 1s ease;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.quiz-container.fade-out {
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.result-popup-content {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes timerAnimation {
+  0% {
+    width: 100%;
+    background-color: #1abc9c; /* Green color */
+  }
+  50% {
+    width: 50%;
+    background-color: #f1c40f; /* Yellow color */
+  }
+  100% {
+    width: 0;
+    background-color: #e74c3c; /* Red color */
+  }
+}
+
+.quiz-container.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease-out; /* Adjust the duration and easing as needed */
+}
+
+.quiz-container:not(.fade-out) {
+  opacity: 1;
+  transition: opacity 0.4s ease-out; /* Adjust the duration and easing as needed */
+}

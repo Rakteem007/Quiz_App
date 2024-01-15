@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Quiz Website</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Advanced Quiz App</h1>
+    </header>
+
+    <div style="display: flex; justify-content: center; margin-top: 10%">
+      <button class="btn btn-start" id="start-quiz" onclick="startQuiz()">
+        Start Quiz
+      </button>
+    </div>
+
+    <div style="display: flex; justify-content: center">
+      <div class="quiz-container" id="quiz-container">
+        <div class="question-container">
+          <div class="timer-bar">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          <div class="question" id="question">
+            <!-- Question 1: What is the capital of France? -->
+          </div>
+          <div class="options" id="options">
+            <div class="option">
+              <input type="radio" name="answer" value="Paris" /> 
+              <!-- Paris -->
+            </div>
+            <div class="option">
+              <input type="radio" name="answer" value="Berlin" /> 
+              <!-- Berlin -->
+            </div>
+            <div class="option">
+              <input type="radio" name="answer" value="London" /> 
+              London
+            </div>
+          </div>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-next" onclick="checkAnswer()">Next</button>
+          <div id="score"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-popup" id="result-popup">
+      <div class="result-popup-content" id="popup-content">
+        <h2 id="popup-message"></h2>
+        <button class="btn btn-next" onclick="nextQuestion()">Next</button>
+      </div>
+    </div>
+
+    <div class="finish-container" id="finish-container">
+      <h2 id="comment"></h2>
+      <p class="finish-message">Quiz Completed!</p>
+      <p>Your final score: <span id="final-score"></span></p>
+      <button class="btn btn-restart" onclick="restartQuiz()">
+        Restart Quiz
+      </button>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 Advanced Quiz App</p>
+    </footer>
+
+    <!-- Update the <script> section with the following changes -->
+    <script src="script.js"></script>
+  </body>
+</html>
