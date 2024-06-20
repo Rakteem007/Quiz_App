@@ -1,2 +1,1 @@
-This is a Quiz App .
-This is an experiment to make a basic quiz app using GenAI --> Chatgpt.
+This is a Quiz App for the quiz event for Paridhi Fest(Megatronix).
