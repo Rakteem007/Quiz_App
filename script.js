@@ -3,170 +3,150 @@ let score = 0;
 let timerInterval;
 let random_number = 0;
 
-let questions = [
-  {
-    question: "What is the capital of France?",
-    options: ["Paris", "Berlin", "London"],
-    correctAnswer: "Paris",
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Venus"],
-    correctAnswer: "Mars",
-  },
-  {
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Blue Whale", "Giraffe"],
-    correctAnswer: "Blue Whale",
-  },
-  {
-    question: "Which programming language is known for building web pages?",
-    options: ["Java", "Python", "HTML"],
-    correctAnswer: "HTML",
-  },
-  {
-    question: "What is the capital of Japan?",
-    options: ["Seoul", "Tokyo", "Beijing"],
-    correctAnswer: "Tokyo",
-  },
-  {
-    question: "How many continents are there?",
-    options: ["5", "6", "7"],
-    correctAnswer: "7",
-  },
-  {
-    question: "Which is the largest ocean?",
-    options: ["Atlantic", "Indian", "Pacific"],
-    correctAnswer: "Pacific",
-  },
-  {
-    question: "What is the currency of Brazil?",
-    options: ["Peso", "Real", "Dollar"],
-    correctAnswer: "Real",
-  },
-  {
-    question: "Who wrote 'Romeo and Juliet'?",
-    options: ["Charles Dickens", "William Shakespeare", "Jane Austen"],
-    correctAnswer: "William Shakespeare",
-  },
-  {
-    question: "What is the largest desert in the world?",
-    options: ["Sahara", "Arabian", "Antarctica"],
-    correctAnswer: "Antarctica",
-  },
-  {
-    question: "In which year did World War II end?",
-    options: ["1945", "1939", "1950"],
-    correctAnswer: "1945",
-  },
-  {
-    question: "What is the capital of France?",
-    options: ["Paris", "Berlin", "London"],
-    correctAnswer: "Paris",
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Venus"],
-    correctAnswer: "Mars",
-  },
-  {
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Blue Whale", "Giraffe"],
-    correctAnswer: "Blue Whale",
-  },
-  {
-    question: "Which programming language is known for building web pages?",
-    options: ["Java", "Python", "HTML"],
-    correctAnswer: "HTML",
-  },
-  {
-    question: "What is the capital of Japan?",
-    options: ["Seoul", "Tokyo", "Beijing"],
-    correctAnswer: "Tokyo",
-  },
-  {
-    question: "How many continents are there?",
-    options: ["5", "6", "7"],
-    correctAnswer: "7",
-  },
-  {
-    question: "Which is the largest ocean?",
-    options: ["Atlantic", "Indian", "Pacific"],
-    correctAnswer: "Pacific",
-  },
-  {
-    question: "What is the currency of Brazil?",
-    options: ["Peso", "Real", "Dollar"],
-    correctAnswer: "Real",
-  },
-  {
-    question: "Who painted the Mona Lisa?",
-    options: ["Vincent van Gogh", "Leonardo da Vinci", "Pablo Picasso"],
-    correctAnswer: "Leonardo da Vinci",
-  },
-  {
-    question: "Which element has the chemical symbol 'O'?",
-    options: ["Oxygen", "Gold", "Silver"],
-    correctAnswer: "Oxygen",
-  },
-  {
-    question: "What is the largest mountain in the world?",
-    options: ["K2", "Mount Everest", "Kangchenjunga"],
-    correctAnswer: "Mount Everest",
-  },
-  {
-    question: "In which year did the Titanic sink?",
-    options: ["1912", "1920", "1905"],
-    correctAnswer: "1912",
-  },
-  // Add more questions as needed
-];
+const apiURL = "https://opentdb.com/api.php?amount=30&type=multiple";
+
+let questions = [];
+
+fetch(apiURL)
+  .then((response) => response.json())
+  .then((data) => {
+    questions = data.results.map((item) => ({
+      question: item.question,
+      options: [...item.incorrect_answers, item.correct_answer].sort(
+        () => Math.random() - 0.5
+      ),
+      correctAnswer: item.correct_answer,
+    }));
+
+    // Reinitialize the random number generator with the correct length
+    generateRandomNumber = createRandomNumberGenerator(0, questions.length - 1);
+
+    // Log the questions to the console for verification
+    console.log(questions);
+  })
+  .catch((error) => {
+    console.error("Error fetching questions:", error);
+  });
 
 function createRandomNumberGenerator(min, max) {
-  // Create an array to store generated numbers
   const generatedNumbers = [];
 
-  // Function to generate a unique random number within the specified range
   function getRandomNumber() {
     let randomNumber;
-
-    // Keep generating until a unique number is found
     do {
       randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
     } while (generatedNumbers.includes(randomNumber));
-
-    // Add the generated number to the array
     generatedNumbers.push(randomNumber);
-
     return randomNumber;
   }
 
   return getRandomNumber;
 }
-let generateRandomNumber = createRandomNumberGenerator(0, questions.length);
+
+// Initialize with an empty generator to prevent errors before fetching questions
+let generateRandomNumber = () => Math.floor(Math.random() * 10);
 
 function startQuiz() {
+  if (questions.length === 0) {
+    alert("Questions are not loaded yet. Please try again later.");
+    return;
+  }
+
   document.getElementById("quiz-container").style.display = "block";
   document.getElementById("start-quiz").style.display = "none";
   displayQuestion();
+}
+
+function decodeHtmlEntities(str) {
+  const entities = {
+    "&#039;s": "'s",
+    "&quot;": '"',
+    "&apos;": "'",
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&cent;": "¢",
+    "&pound;": "£",
+    "&yen;": "¥",
+    "&euro;": "€",
+    "&copy;": "©",
+    "&reg;": "®",
+    "&trade;": "™",
+    "&sect;": "§",
+    "&para;": "¶",
+    "&bull;": "•",
+    "&hellip;": "…",
+    "&prime;": "′",
+    "&Prime;": "″",
+    "&lsaquo;": "‹",
+    "&rsaquo;": "›",
+    "&oline;": "‾",
+    "&frasl;": "⁄",
+    "&ndash;": "–",
+    "&mdash;": "—",
+    "&lsquo;": "‘",
+    "&rsquo;": "’",
+    "&sbquo;": "‚",
+    "&ldquo;": "“",
+    "&rdquo;": "”",
+    "&bdquo;": "„",
+    "&dagger;": "†",
+    "&Dagger;": "‡",
+    "&permil;": "‰",
+    "&lsaquo;": "‹",
+    "&rsaquo;": "›",
+    "&oline;": "‾",
+    "&euro;": "€",
+    "&trade;": "™",
+    "&larr;": "←",
+    "&uarr;": "↑",
+    "&rarr;": "→",
+    "&darr;": "↓",
+    "&harr;": "↔",
+    "&crarr;": "↵",
+    "&lceil;": "⌈",
+    "&rceil;": "⌉",
+    "&lfloor;": "⌊",
+    "&rfloor;": "⌋",
+    "&loz;": "◊",
+    "&spades;": "♠",
+    "&clubs;": "♣",
+    "&hearts;": "♥",
+    "&diams;": "♦",
+  };
+
+  // Check if the string contains any entities
+  const entityRegex = /&[a-z]+;/g;
+  const matches = str.match(entityRegex);
+
+  // If no matches are found, return the original string
+  if (!matches) {
+    return str;
+  }
+
+  // Replace entities with their corresponding characters
+  return str.replace(entityRegex, function (match) {
+    return entities[match] || match;
+  });
 }
 
 function displayQuestion() {
   resetTimer();
   updateScore();
 
+  random_number = generateRandomNumber();
   let questionElement = document.getElementById("question");
   let optionsElement = document.getElementById("options");
 
   let currentQ = questions[random_number];
 
-  questionElement.textContent = `Question ${currentQuestion + 1}: ${
-    currentQ.question
-  }`;
+  questionElement.textContent = `Question ${
+    currentQuestion + 1
+  }: ${decodeHtmlEntities(currentQ.question)}`;
 
   optionsElement.innerHTML = "";
 
-  currentQ.options.sort().forEach((option) => {
+  currentQ.options.forEach((option) => {
     let optionDiv = document.createElement("div");
     optionDiv.classList.add("option");
 
@@ -198,7 +178,7 @@ function resetTimer() {
   let progressBar = document.getElementById("progress-bar");
   progressBar.style.animation = "none";
   void progressBar.offsetWidth; // Trigger reflow
-  progressBar.style.animation = "timerAnimation 10s linear"; // Update timer to 10 seconds
+  progressBar.style.animation = `timerAnimation 10s linear`; // Update timer to 10 seconds
 }
 
 function checkAnswer() {
@@ -237,6 +217,10 @@ function showPopup(message, isCorrect) {
   );
 
   popup.style.display = "flex";
+
+  // Display the Next button after showing the popup
+  let nextButton = document.getElementById("next-button");
+  nextButton.style.display = "inline-block";
 }
 
 function nextQuestion() {
@@ -245,7 +229,6 @@ function nextQuestion() {
 
   // Add the fade-out class to trigger the transition animation
   quizContainer.classList.add("fade-out");
-  random_number = generateRandomNumber();
 
   setTimeout(function () {
     // Remove the fade-out class and proceed to the next question
@@ -267,10 +250,10 @@ function timerFinished() {
   let selectedOption = document.querySelector('input[name="answer"]:checked');
 
   if (!selectedOption) {
-    showPopup("Time's up! Comming up with the next question.", false);
+    showPopup("Time's up! Moving to the next question.", false);
   } else {
     let userAnswer = selectedOption.value;
-    let correctAnswer = questions[currentQuestion].correctAnswer;
+    let correctAnswer = questions[random_number].correctAnswer;
 
     if (userAnswer === correctAnswer) {
       score++;
@@ -302,13 +285,13 @@ function showFinalScore() {
 
   let commentElement = document.getElementById("comment");
 
-  score = (score / questions.length) * 100;
+  let percentageScore = (score / 10) * 100;
 
-  if (score <= 40) {
+  if (percentageScore <= 40) {
     commentElement.textContent = "You can do better. Keep trying!";
-  } else if (score <= 60) {
+  } else if (percentageScore <= 60) {
     commentElement.textContent = "Not bad. You're making progress!";
-  } else if (score <= 80) {
+  } else if (percentageScore <= 80) {
     commentElement.textContent = "Great job! You're doing well!";
   } else {
     commentElement.textContent = "Congratulations! You're the best!";
@@ -328,3 +311,13 @@ function restartQuiz() {
   document.getElementById("finish-container").style.display = "none";
   startQuiz();
 }
+
+// Ensure the Next button is hidden initially
+document.addEventListener("DOMContentLoaded", function () {
+  let nextButton = document.getElementById("next-button");
+  nextButton.style.display = "none";
+  setTimeout(function () {
+    nextButton.addEventListener("click", nextQuestion);
+  }, 2000);
+  nextButton.addEventListener("click", nextQuestion);
+});
